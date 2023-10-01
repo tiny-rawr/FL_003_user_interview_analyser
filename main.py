@@ -11,7 +11,7 @@ def main():
         st.session_state.questions = []
 
     st.title('User Interview Analysis')
-    st.markdown('Upload user interviews and get back a list of quotes that are relevant to the questions you care about. Read the behind the scenes process here: 💌 [Fairylights Newsletter](https://fairylightsai.substack.com).')
+    st.markdown('Upload user interviews and get back a list of quotes that are relevant to the questions you care about. Read the behind the scenes process here: 💌 [Ask questions about interview transcripts](https://fairylightsai.substack.com/p/4-ask-questions-about-interview-transcripts).')
 
     key = st.text_input("Enter your OpenAI API key:", type="password")
 
