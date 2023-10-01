@@ -78,7 +78,7 @@ def main():
             model_type = "gpt-3.5-turbo-16k"
             system_behaviour = "You analyze interviews with World War II veterans to gain a deeper understanding of their wartime experiences."
             name_of_function = "analyze_interview"
-            function_description = "This function extracts direct quotes from interviews that answer specific questions about the veteran's experiences during World War II."
+            function_description = "You extract direct quotes from interviews that are related to questions asked about the veteran's experiences during World War II. Be comprehensive in your response. Only use direct quotes."
             properties = generate_properties(st.session_state.questions)
             required_properties = ["interview"]
 

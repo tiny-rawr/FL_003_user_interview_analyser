@@ -7,7 +7,7 @@ def generate_properties(questions):
     }
 
     for question in questions:
-        description = f"A direct quote from the interview that answers the question '{question}'"
+        description = f"A direct quote from the interview that is relevant to the question '{question}'. Use direct quotes only."
         properties["interview"]["properties"][question] = {
             "type": "array",
             "items": {
