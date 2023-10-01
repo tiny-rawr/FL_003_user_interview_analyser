@@ -25,3 +25,11 @@ def gpt_api_call(model_type, system_behaviour, user_submitted_content, name_of_f
     data = data.get('interview', [])
     return data
 
+def test_openai_api_key(api_key):
+    try:
+        openai.api_key = api_key
+        response = openai.Completion.create(engine="davinci", prompt="This is a test.")
+        return True, None  # Key is valid
+    except Exception as e:
+        return False, str(e)
+

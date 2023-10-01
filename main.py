@@ -1,7 +1,8 @@
 import streamlit as st
 from example_interviews import example_interview
 from property_generation import generate_properties
-from gpt_api import gpt_api_call
+from gpt_api import gpt_api_call, test_openai_api_key
+import openai
 
 def main():
     if 'interviews' not in st.session_state:
@@ -10,7 +11,18 @@ def main():
         st.session_state.questions = []
 
     st.title('User Interview Analysis')
-    st.write('Upload your user interviews, enter the questions you want to ask about the data, and get back a list of quotes that are relevant to the questions you care about.')
+    st.markdown('Upload user interviews and get back a list of quotes that are relevant to the questions you care about. Read the behind the scenes process here: 💌 [Fairylights Newsletter](https://fairylightsai.substack.com).')
+
+    key = st.text_input("Enter your OpenAI API key:", type="password")
+
+    openai.api_key = key
+
+    if key:
+        is_valid, error_message = test_openai_api_key(key)
+        if is_valid:
+            st.success("API key is valid.")
+        else:
+            st.error(f"API key is invalid. Error: {error_message}")
 
     st.header('Step 1: Upload interviews')
 
