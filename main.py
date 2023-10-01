@@ -1,5 +1,7 @@
 import streamlit as st
 from example_interviews import example_interview
+from property_generation import generate_properties
+from gpt_api import gpt_api_call
 
 def main():
     if 'interviews' not in st.session_state:
@@ -66,6 +68,38 @@ def main():
             st.subheader('Questions:')
             for i, question in enumerate(st.session_state.questions):
                 st.write(f"{i + 1}. {question}")
+
+        st.markdown("---")
+
+        st.header("Step 3: Run interview analysis")
+        st.write("When you run the interview analysis, we will extract all of the quotes that are relevant to the questions you asked above.")
+
+        if st.button('Analyse interviews'):
+            model_type = "gpt-3.5-turbo-16k"
+            system_behaviour = "You analyze interviews with World War II veterans to gain a deeper understanding of their wartime experiences."
+            name_of_function = "analyze_interview"
+            function_description = "This function extracts direct quotes from interviews that answer specific questions about the veteran's experiences during World War II."
+            properties = generate_properties(st.session_state.questions)
+            required_properties = ["interview"]
+
+            category_quotes = {}
+
+            for interview in st.session_state.interviews:
+                response = gpt_api_call(model_type, system_behaviour, interview, name_of_function,
+                                            function_description, properties, required_properties)
+
+                for category, quotes in response.items():
+                    if category not in category_quotes:
+                        category_quotes[category] = []
+
+                    for quote in quotes:
+                        category_quotes[category].append(quote)
+
+            for category, quotes in category_quotes.items():
+                st.subheader(f"{category}\n")
+                for i, quote in enumerate(quotes, start=1):
+                    st.write(f"\"{quote}\"")
+
 
 if __name__ == '__main__':
     main()
